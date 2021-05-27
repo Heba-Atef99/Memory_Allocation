@@ -1,9 +1,8 @@
-﻿using classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using classes;
 namespace mem_allocation
 {
     class Program
@@ -13,7 +12,7 @@ namespace mem_allocation
             int mem_size;
             int num_holes; //number of holes
             int num_process;//number of process
-            List<Classes> hole_list = new List<Classes>();
+            List<Hole> hole_list = new List<Hole>();
             List<Segment> segment_list = new List<Segment>();
             string type_method;
             Console.WriteLine("enter mem_size ");
@@ -23,15 +22,16 @@ namespace mem_allocation
             //enter all holes
             for(int i = 0; i < num_holes; i++)
             {
-                Classes hole = new Classes();// var to take hole from user and adding to hole_list
+                Hole hole = new Hole();// var to take hole from user and adding to hole_list
                 Console.WriteLine("enter  starting address for hole "+ i);
                 hole.set_Hole_ID(i);
                 hole.set_Starting_Address(Convert.ToInt32(Console.ReadLine()));
                 Console.WriteLine("enter size for hole " + i);
                 hole.set_Size(Convert.ToInt32(Console.ReadLine()));
                 hole_list.Add(hole);
-            }
 
+
+            }
             Console.WriteLine("enter number of process ");
             num_process = Convert.ToInt32(Console.ReadLine());
             //enter all processes
