@@ -108,7 +108,7 @@ namespace mem_allocation
                 {             
                     Segment segment = new Segment();// var to take Segment from user and adding to Segment_list
                     Console.WriteLine("enter  name of Segment " + i);
-                    segment.set_Process_ID(i);
+                    segment.set_Process_ID(j);
                     segment.set_Name(Console.ReadLine());
                     Console.WriteLine("enter size for Segment " + i);
                     segment.set_Size(Convert.ToInt32(Console.ReadLine()));
