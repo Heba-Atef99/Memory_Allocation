@@ -81,9 +81,10 @@ namespace mem_allocation
                         {
                             if (i > 0)
                             { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); old_number += 1; }
-                           
+
                             else if (i == 0)
-                                start = 0; old_number += 1;
+                            { start = 0; old_number += 1; }
+                                
                         }
 
                     }
@@ -105,8 +106,8 @@ namespace mem_allocation
                 segment_list.Add(segment);
                 old_number--;
             }
-
-            Console.WriteLine("enter number of process ");
+            
+                Console.WriteLine("enter number of process ");
             num_process = Convert.ToInt32(Console.ReadLine());
             //enter all processes
             for(int j=0;j< num_process; j++)
