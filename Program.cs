@@ -128,8 +128,93 @@ namespace mem_allocation
                 }
 
             }
-            Console.WriteLine("enter  method of allocation (first fit or best fit). " );
+            Console.WriteLine("enter  method of allocation (first fit or best fit). ");
+            string s;
+            int flag ;
+            int process_id_d;//process id of delete current segment
+            int delete;
+            string name_delete_process;
+             
             type_method = Console.ReadLine();
+            switch (type_method)
+            {
+              case  "first fit" :
+                    for(int i=0;i< segment_list.Count(); i++)
+                    {
+                        flag = 0;
+                        for (int j=0;j< history_list.Count(); j++)
+                        {
+                            s = history_list[j].get_Name();
+
+
+                           if ( s.Substring(0,4) == "Hole")
+                            {
+                                if((history_list[j].get_End()- history_list[j].get_Start()+1)== segment_list[i].get_Size())
+                                {
+                                    // alocate function
+                                    flag = 1;
+                                    break;
+                                    
+                                }
+
+                            }
+
+                        }
+                        if (flag == 0)
+                        {
+                            Console.WriteLine("0 or 1 " );//if delete =1 want to delete
+                            delete = Convert.ToInt32(Console.ReadLine());
+                            if (delete == 1)
+                            {
+                                Console.WriteLine("which process want to delete ");
+                                name_delete_process = Console.ReadLine();
+                                if (name_delete_process[0] == 'P')
+                                {
+                                    for (int k = 0; k < segment_list.Count(); k++)
+                                    {
+                                        if (Convert.ToInt32(name_delete_process.Substring(1)) == segment_list[k].get_Process_ID())
+                                        {
+                                            //delete segment
+                                            //dealocate
+                                            //segment_list[i].dealocate(history_list);
+                                        }
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    for(int k=0;k< segment_list.Count(); k++)
+                                    {
+                                        if(name_delete_process== segment_list[k].get_Name())
+                                        {
+                                            //delete segment
+                                            //dealocate
+                                        }
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                //delete segments of currnt process
+                                process_id_d = segment_list[i].get_Process_ID();
+                                for (int k = 0; k < segment_list.Count(); k++)
+                                {
+                                    if (process_id_d == segment_list[k].get_Process_ID())
+                                    {
+                                        //delete segment
+                                        //dealocate
+                                    }
+                                }
+
+
+                            }
+
+                        }
+                    }
+                    break;
+                }
            
 
         }
