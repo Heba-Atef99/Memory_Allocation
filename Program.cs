@@ -54,11 +54,15 @@ namespace mem_allocation
                 }
                 else if (i == (hole_list.Count - 1))
                 {
-                    if (i == 0 && (hole_list[i].get_Starting_Address() != 0))
-                        start = 0;
+                    if (i == 0 && (hole_list[i].get_Starting_Address() != 0) && ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) == mem_size))
+                    {  
+                       start = 0;
+                        
+                    }
+                         
                     else if ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) < mem_size)
                     {
-                        if (i > 0) old_number -= 1;
+                        if ((i > 0) | ((i==0)&&(hole_list[i].get_Starting_Address() != 0))) old_number -= 1;
                         // putting last old process in history
                         Mem_History history_element_last = new Mem_History();
                         history_element_last.set_Name("Old Process"+(-1*(old_number)));
@@ -71,9 +75,16 @@ namespace mem_allocation
                         segment_last.set_Process_ID(old_number);
                         segment_last.set_Size((history_element_last.get_End())-(history_element_last.get_Start()) +1);
                         segment_list.Add(segment_last);
-                        if (i == 0)
+                        if ((i == 0) && (hole_list[i].get_Starting_Address() == 0))
                             continue;
-                        else { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); old_number += 1; }
+                        else 
+                        {
+                            if (i > 0)
+                            { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); old_number += 1; }
+                           
+                            else if (i == 0)
+                                start = 0; old_number += 1;
+                        }
 
                     }
                     
@@ -94,7 +105,7 @@ namespace mem_allocation
                 segment_list.Add(segment);
                 old_number--;
             }
-              
+
             Console.WriteLine("enter number of process ");
             num_process = Convert.ToInt32(Console.ReadLine());
             //enter all processes
