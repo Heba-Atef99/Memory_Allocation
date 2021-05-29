@@ -105,7 +105,7 @@ namespace classes
                     history_list[history_list.FindIndex(a => a.get_Start() == find3)].set_Name("Hole" + i);
                 }
                 // to sort history again
-                //history_list = history_list.OrderBy(Hole => Hole.get_Start()).ToList();
+                history_list = history_list.OrderBy(Hole => Hole.get_Start()).ToList();
             }
             
 
