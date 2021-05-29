@@ -61,7 +61,7 @@ namespace classes
             {
                 if(history_list[i].get_Start()==h.get_Starting_Address())
                 {
-                    history_list[i].set_Name (this.get_Name());
+                    history_list[i].set_Name ("P"+this.get_Process_ID() +":"+this.get_Name());
                     history_list[i].set_End(history_list[i].get_Start()+this.get_Size()-1);
                     
                     break;
