@@ -62,6 +62,7 @@ namespace mem_allocation
                         // putting last old process in history
                         Mem_History history_element_last = new Mem_History();
                         history_element_last.set_Name("Old Process"+(-1*(old_number)));
+                        history_element_last.set_Id(old_number);
                         history_element_last.set_Start((hole_list[i].get_Starting_Address())+ hole_list[i].get_Size());
                         history_element_last.set_End(mem_size-1);
                         history_list.Add(history_element_last);
@@ -83,6 +84,7 @@ namespace mem_allocation
                 // putting old process in history_list
                 Mem_History history_element = new Mem_History();
                 history_element.set_Name("Old Process" + (-1 * old_number));
+                history_element.set_Id(old_number);
                 history_element.set_Start(start);
                 history_element.set_End(hole_list[i].get_Starting_Address()-1);
                 history_list.Add(history_element);
