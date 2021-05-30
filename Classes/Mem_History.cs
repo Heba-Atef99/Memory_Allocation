@@ -4,7 +4,7 @@ using System.Text;
 
 namespace classes
 {
-    class Mem_History
+   public class Mem_History
     {
         private string Name;
         private Nullable<int> Id;

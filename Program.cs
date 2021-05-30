@@ -5,11 +5,11 @@ using System.Text;
 using classes;
 namespace mem_allocation
 {
-   
+
 
     class Program
     {
-        
+
         static void Main(string[] args)
         {
             int mem_size;
@@ -136,8 +136,10 @@ namespace mem_allocation
             }
             //Console.WriteLine("enter  method of allocation (first fit or best fit). ");
             //type_method = Console.ReadLine();
-            int p_id=0;
-            Boolean b = First_Fit(ref segment_list,ref  history_list,ref  hole_list,ref p_id);
+            int p_id = 0;
+            Boolean b = Worst_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
+
+           // Boolean b = First_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
             if (b == false)
             {
                 Console.WriteLine("enter Process Id you want to remove");
@@ -147,38 +149,41 @@ namespace mem_allocation
                 deal(pn, ref segment_list, ref history_list, ref hole_list);
             }
 
+
         }
+        //delete what user want remove from mem history and segment
         public static void deal(int pn, ref List<Segment> segment_list, ref List<Mem_History> history_list, ref List<Hole> hole_list)
         {
             for (int i = 0; i < segment_list.Count(); i++)
             {
                 if (segment_list[i].get_Process_ID() == pn)
                 {
-                    segment_list.Remove(segment_list[i]);
-
+                    
                     segment_list[i].Deallocate(ref history_list, ref hole_list);
+                    segment_list.Remove(segment_list[i]);
                 }
 
             }
 
         }
-        public static Boolean First_Fit(ref List<Segment> segment_list,ref List<Mem_History> history_list,ref List<Hole> hole_list,ref int p_id)
+        public static Boolean First_Fit(ref List<Segment> segment_list, ref List<Mem_History> history_list, ref List<Hole> hole_list, ref int p_id)
         {
             int flag;
             //Mem_History index =new Mem_History();//result of find segment in meme history
             int index1;
             int index2;
             //Segment s = new Segment();
-            for(int i=0;i< segment_list.Count(); i++)
+            for (int i = 0; i < segment_list.Count(); i++)
             {
                 int add = segment_list[i].get_Process_ID();
                 string s = segment_list[i].get_Name();
                 flag = 0;
-                index1 = history_list.FindIndex(x=>x.get_Name()==
-                ("p"+Convert.ToString(add) +":"+ s));
+                history_list = history_list.OrderBy(s => s.get_Start()).ToList();//here
+                index1 = history_list.FindIndex(x => x.get_Name() ==
+                ("p" + Convert.ToString(add) + ":" + s));
                 index2 = history_list.FindIndex(x => x.get_Name() == s);
 
-                if (index1 == -1&& index2==-1)
+                if (index1 == -1 && index2 == -1)
                 {
                     for (int j = 0; j < history_list.Count(); j++)
                     {
@@ -196,7 +201,129 @@ namespace mem_allocation
 
                             }
 
-                            segment_list[i].allocate(h,ref  history_list,ref  hole_list);
+                            segment_list[i].allocate(h, ref history_list, ref hole_list);
+                            flag = 1;
+                            break;
+                        }
+
+                    }
+                    if (flag == 0)
+                    {
+                        p_id = segment_list[i].get_Process_ID();
+                        for (int l = 0; l < segment_list.Count(); l++)
+                        {
+                            if (segment_list[l].get_Process_ID() == p_id)
+                            {
+                                segment_list[l].Deallocate(ref history_list, ref hole_list);
+                            }
+
+                        }
+                        return false;
+                    }
+                }
+
+            }
+
+            return true;
+
+        }
+        public static Boolean Best_Fit(ref List<Segment> segment_list, ref List<Mem_History> history_list, ref List<Hole> hole_list, ref int p_id)
+        {
+            int flag;
+            //Mem_History index =new Mem_History();//result of find segment in meme history
+            int index1;
+            int index2;
+            //Segment s = new Segment();
+            for (int i = 0; i < segment_list.Count(); i++)
+            {
+                int add = segment_list[i].get_Process_ID();
+                string s = segment_list[i].get_Name();
+                flag = 0;
+                history_list = history_list.OrderBy(s => (s.get_End()- s.get_Start()+1)).ToList();//here
+                index1 = history_list.FindIndex(x => x.get_Name() ==
+                ("p" + Convert.ToString(add) + ":" + s));
+                index2 = history_list.FindIndex(x => x.get_Name() == s);
+
+                if (index1 == -1 && index2 == -1)
+                {
+                    for (int j = 0; j < history_list.Count(); j++)
+                    {
+
+                        if ((history_list[j].get_End() - history_list[j].get_Start() + 1)
+                            >= segment_list[i].get_Size() && history_list[j].get_Id() == null)
+                        {
+                            Hole h = new Hole();
+                            for (int k = 0; k < hole_list.Count(); k++)
+                            {
+                                if (hole_list[k].get_Starting_Address() == history_list[j].get_Start())
+                                {
+                                    h = hole_list[k];
+                                }
+
+                            }
+
+                            segment_list[i].allocate(h, ref history_list, ref hole_list);
+                            flag = 1;
+                            break;
+                        }
+
+                    }
+                    if (flag == 0)
+                    {
+                        p_id = segment_list[i].get_Process_ID();
+                        for (int l = 0; l < segment_list.Count(); l++)
+                        {
+                            if (segment_list[l].get_Process_ID() == p_id)
+                            {
+                                segment_list[l].Deallocate(ref history_list, ref hole_list);
+                            }
+
+                        }
+                        return false;
+                    }
+                }
+
+            }
+
+            return true;
+
+        }
+        public static Boolean Worst_Fit(ref List<Segment> segment_list, ref List<Mem_History> history_list, ref List<Hole> hole_list, ref int p_id)
+        {
+            int flag;
+            //Mem_History index =new Mem_History();//result of find segment in meme history
+            int index1;
+            int index2;
+            //Segment s = new Segment();
+            for (int i = 0; i < segment_list.Count(); i++)
+            {
+                int add = segment_list[i].get_Process_ID();
+                string s = segment_list[i].get_Name();
+                flag = 0;
+                history_list = history_list.OrderByDescending(s => (s.get_End() - s.get_Start() + 1)).ToList();//here
+                index1 = history_list.FindIndex(x => x.get_Name() ==
+                ("p" + Convert.ToString(add) + ":" + s));
+                index2 = history_list.FindIndex(x => x.get_Name() == s);
+
+                if (index1 == -1 && index2 == -1)
+                {
+                    for (int j = 0; j < history_list.Count(); j++)
+                    {
+
+                        if ((history_list[j].get_End() - history_list[j].get_Start() + 1)
+                            >= segment_list[i].get_Size() && history_list[j].get_Id() == null)
+                        {
+                            Hole h = new Hole();
+                            for (int k = 0; k < hole_list.Count(); k++)
+                            {
+                                if (hole_list[k].get_Starting_Address() == history_list[j].get_Start())
+                                {
+                                    h = hole_list[k];
+                                }
+
+                            }
+
+                            segment_list[i].allocate(h, ref history_list, ref hole_list);
                             flag = 1;
                             break;
                         }
