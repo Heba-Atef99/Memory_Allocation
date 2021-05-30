@@ -33,6 +33,7 @@ namespace memory_blocks
                 comboBox1.DataSource = new BindingSource(comboSource, null);
                 comboBox1.DisplayMember = "Value";
                 comboBox1.ValueMember = "Key";
+                comboBox1.SelectedItem = null; 
             }
             else
             {
@@ -47,9 +48,16 @@ namespace memory_blocks
 
         private void deallocate_btn_Click(object sender, EventArgs e)
         {
-            Nullable<int> key = ((KeyValuePair<Nullable<int>, string>)comboBox1.SelectedItem).Key;
-            string value = ((KeyValuePair<Nullable<int>, string>)comboBox1.SelectedItem).Value;
-            MessageBox.Show(key + "   " + value);
+            if (comboBox1.SelectedItem != null)
+            {
+                string value = ((KeyValuePair<Nullable<int>, string>)comboBox1.SelectedItem).Value;
+                Nullable<int> key = ((KeyValuePair<Nullable<int>, string>)comboBox1.SelectedItem).Key;
+                MessageBox.Show(key + "   " + value);
+            }
+            else
+            {
+                MessageBox.Show("You have not chosen a process to deallocate");
+            }
         }
 
         private void Deallocate_Paint(object sender, PaintEventArgs e)
