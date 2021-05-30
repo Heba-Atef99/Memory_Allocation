@@ -138,10 +138,31 @@ namespace mem_allocation
             //type_method = Console.ReadLine();
             int p_id=0;
             Boolean b = First_Fit(ref segment_list,ref  history_list,ref  hole_list,ref p_id);
+            if (b == false)
+            {
+                Console.WriteLine("enter Process Id you want to remove");
 
+                int pn;
+                pn = Convert.ToInt32(Console.ReadLine());
+                deal(pn, ref segment_list, ref history_list, ref hole_list);
+            }
 
         }
-       public static Boolean First_Fit(ref List<Segment> segment_list,ref List<Mem_History> history_list,ref List<Hole> hole_list,ref int p_id)
+        public static void deal(int pn, ref List<Segment> segment_list, ref List<Mem_History> history_list, ref List<Hole> hole_list)
+        {
+            for (int i = 0; i < segment_list.Count(); i++)
+            {
+                if (segment_list[i].get_Process_ID() == pn)
+                {
+                    segment_list.Remove(segment_list[i]);
+
+                    segment_list[i].Deallocate(ref history_list, ref hole_list);
+                }
+
+            }
+
+        }
+        public static Boolean First_Fit(ref List<Segment> segment_list,ref List<Mem_History> history_list,ref List<Hole> hole_list,ref int p_id)
         {
             int flag;
             //Mem_History index =new Mem_History();//result of find segment in meme history
@@ -184,6 +205,14 @@ namespace mem_allocation
                     if (flag == 0)
                     {
                         p_id = segment_list[i].get_Process_ID();
+                        for (int l = 0; l < segment_list.Count(); l++)
+                        {
+                            if (segment_list[l].get_Process_ID() == p_id)
+                            {
+                                segment_list[l].Deallocate(ref history_list, ref hole_list);
+                            }
+
+                        }
                         return false;
                     }
                 }
