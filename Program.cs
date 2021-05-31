@@ -33,84 +33,84 @@ namespace mem_allocation
                 //Console.WriteLine("enter size for hole " + i);
                 hole.set_Size(Convert.ToInt32(Console.ReadLine()));
                 hole_list.Add(hole);
-                // Adding holes in history_list
-                Mem_History history_element = new Mem_History();
-                history_element.set_Name("Hole" + i);
-                history_element.set_Start(hole.get_Starting_Address());
-                history_element.set_End((hole.get_Starting_Address()) + (hole.get_Size()) - 1);
-                history_list.Add(history_element);
+                //// Adding holes in history_list
+                //Mem_History history_element = new Mem_History();
+                //history_element.set_Name("Hole" + i);
+                //history_element.set_Start(hole.get_Starting_Address());
+                //history_element.set_End((hole.get_Starting_Address()) + (hole.get_Size()) - 1);
+                //history_list.Add(history_element);
 
 
             }
-            // Handling Old Processes
-            // sorting hole list by starting address
-            hole_list = hole_list.OrderBy(Hole => Hole.get_Starting_Address()).ToList();
-            int old_number = -1; // old process id
-            int start = 0;
-            for (int i = 0; i < hole_list.Count; i++)
-            {
-                if (i == 0 && hole_list.Count > 1)
-                {
-                    if (hole_list[i].get_Starting_Address() == 0)
-                        continue;
-                    else { start = 0; }
-                }
-                else if (i == (hole_list.Count - 1))
-                {
-                    if (i == 0 && (hole_list[i].get_Starting_Address() != 0) && ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) == mem_size))
-                    {
-                        start = 0;
+            //// Handling Old Processes
+            //// sorting hole list by starting address
+            //hole_list = hole_list.OrderBy(Hole => Hole.get_Starting_Address()).ToList();
+            //int old_number = -1; // old process id
+            //int start = 0;
+            //for (int i = 0; i < hole_list.Count; i++)
+            //{
+            //    if (i == 0 && hole_list.Count > 1)
+            //    {
+            //        if (hole_list[i].get_Starting_Address() == 0)
+            //            continue;
+            //        else { start = 0; }
+            //    }
+            //    else if (i == (hole_list.Count - 1))
+            //    {
+            //        if (i == 0 && (hole_list[i].get_Starting_Address() != 0) && ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) == mem_size))
+            //        {
+            //            start = 0;
 
-                    }
+            //        }
 
-                    else if ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) < mem_size)
-                    {
-                        if ((i > 0) | ((i == 0) && (hole_list[i].get_Starting_Address() != 0))) old_number -= 1;
-                        // putting last old process in history
-                        Mem_History history_element_last = new Mem_History();
-                        history_element_last.set_Name("Old Process" + (-1 * (old_number)));
-                        history_element_last.set_Start((hole_list[i].get_Starting_Address()) + hole_list[i].get_Size());
-                        history_element_last.set_End(mem_size - 1);
-                        history_element_last.set_Id(old_number);//here
-                        history_list.Add(history_element_last);
-                        // putting last old process in segment
-                        Segment segment_last = new Segment();
-                        segment_last.set_Name("Old Process" + (-1 * (old_number)));
-                        segment_last.set_Process_ID(old_number);
-                        segment_last.set_Size((history_element_last.get_End()) - (history_element_last.get_Start()) + 1);
-                        segment_list.Add(segment_last);
-                        if ((i == 0) && (hole_list[i].get_Starting_Address() == 0))
-                            continue;
-                        else
-                        {
-                            if (i > 0)
-                            { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); old_number += 1; }
+            //        else if ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) < mem_size)
+            //        {
+            //            if ((i > 0) | ((i == 0) && (hole_list[i].get_Starting_Address() != 0))) old_number -= 1;
+            //            // putting last old process in history
+            //            Mem_History history_element_last = new Mem_History();
+            //            history_element_last.set_Name("Old Process" + (-1 * (old_number)));
+            //            history_element_last.set_Start((hole_list[i].get_Starting_Address()) + hole_list[i].get_Size());
+            //            history_element_last.set_End(mem_size - 1);
+            //            history_element_last.set_Id(old_number);//here
+            //            history_list.Add(history_element_last);
+            //            // putting last old process in segment
+            //            Segment segment_last = new Segment();
+            //            segment_last.set_Name("Old Process" + (-1 * (old_number)));
+            //            segment_last.set_Process_ID(old_number);
+            //            segment_last.set_Size((history_element_last.get_End()) - (history_element_last.get_Start()) + 1);
+            //            segment_list.Add(segment_last);
+            //            if ((i == 0) && (hole_list[i].get_Starting_Address() == 0))
+            //                continue;
+            //            else
+            //            {
+            //                if (i > 0)
+            //                { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); old_number += 1; }
 
-                            else if (i == 0)
-                            { start = 0; old_number += 1; }
+            //                else if (i == 0)
+            //                { start = 0; old_number += 1; }
 
-                        }
+            //            }
 
-                    }
+            //        }
 
-                    else { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); }
-                }
-                else { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); }
-                // putting old process in history_list
-                Mem_History history_element = new Mem_History();
-                history_element.set_Name("Old Process" + (-1 * old_number));
-                history_element.set_Start(start);
-                history_element.set_End(hole_list[i].get_Starting_Address() - 1);
-                history_element.set_Id(old_number);
-                history_list.Add(history_element);
-                // putting old process in segment_list
-                Segment segment = new Segment();
-                segment.set_Name("Old Process" + (-1 * old_number));
-                segment.set_Process_ID(old_number);
-                segment.set_Size((hole_list[i].get_Starting_Address()) - start);
-                segment_list.Add(segment);
-                old_number--;
-            }
+            //        else { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); }
+            //    }
+            //    else { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); }
+            //    // putting old process in history_list
+            //    Mem_History history_element = new Mem_History();
+            //    history_element.set_Name("Old Process" + (-1 * old_number));
+            //    history_element.set_Start(start);
+            //    history_element.set_End(hole_list[i].get_Starting_Address() - 1);
+            //    history_element.set_Id(old_number);
+            //    history_list.Add(history_element);
+            //    // putting old process in segment_list
+            //    Segment segment = new Segment();
+            //    segment.set_Name("Old Process" + (-1 * old_number));
+            //    segment.set_Process_ID(old_number);
+            //    segment.set_Size((hole_list[i].get_Starting_Address()) - start);
+            //    segment_list.Add(segment);
+            //    old_number--;
+            //}
 
             //Console.WriteLine("enter number of process ");
             num_process = Convert.ToInt32(Console.ReadLine());
@@ -350,6 +350,88 @@ namespace mem_allocation
             }
 
             return true;
+
+        }
+        public static void Create_H_L(ref List<Mem_History> history_list, ref List<Hole> hole_list, ref List<Segment> segment_list, int mem_size)
+        {
+            for (int i = 0; i < hole_list.Count(); i++)
+            {
+                Mem_History history_element = new Mem_History();
+                history_element.set_Name("Hole" + i);
+                history_element.set_Start(hole_list[i].get_Starting_Address());
+                history_element.set_End((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) - 1);
+                history_list.Add(history_element);
+
+            }
+            // Handling Old Processes
+            // sorting hole list by starting address
+            hole_list = hole_list.OrderBy(Hole => Hole.get_Starting_Address()).ToList();
+            int old_number = -1; // old process id
+            int start = 0;
+            for (int i = 0; i < hole_list.Count; i++)
+            {
+                if (i == 0 && hole_list.Count > 1)
+                {
+                    if (hole_list[i].get_Starting_Address() == 0)
+                        continue;
+                    else { start = 0; }
+                }
+                else if (i == (hole_list.Count - 1))
+                {
+                    if (i == 0 && (hole_list[i].get_Starting_Address() != 0) && ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) == mem_size))
+                    {
+                        start = 0;
+
+                    }
+
+                    else if ((hole_list[i].get_Starting_Address()) + (hole_list[i].get_Size()) < mem_size)
+                    {
+                        if ((i > 0) | ((i == 0) && (hole_list[i].get_Starting_Address() != 0))) old_number -= 1;
+                        // putting last old process in history
+                        Mem_History history_element_last = new Mem_History();
+                        history_element_last.set_Name("Old Process" + (-1 * (old_number)));
+                        history_element_last.set_Start((hole_list[i].get_Starting_Address()) + hole_list[i].get_Size());
+                        history_element_last.set_End(mem_size - 1);
+                        history_element_last.set_Id(old_number);//here
+                        history_list.Add(history_element_last);
+                        // putting last old process in segment
+                        Segment segment_last = new Segment();
+                        segment_last.set_Name("Old Process" + (-1 * (old_number)));
+                        segment_last.set_Process_ID(old_number);
+                        segment_last.set_Size((history_element_last.get_End()) - (history_element_last.get_Start()) + 1);
+                        segment_list.Add(segment_last);
+                        if ((i == 0) && (hole_list[i].get_Starting_Address() == 0))
+                            continue;
+                        else
+                        {
+                            if (i > 0)
+                            { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); old_number += 1; }
+
+                            else if (i == 0)
+                            { start = 0; old_number += 1; }
+
+                        }
+
+                    }
+
+                    else { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); }
+                }
+                else { start = (hole_list[i - 1].get_Starting_Address()) + (hole_list[i - 1].get_Size()); }
+                // putting old process in history_list
+                Mem_History history_element = new Mem_History();
+                history_element.set_Name("Old Process" + (-1 * old_number));
+                history_element.set_Start(start);
+                history_element.set_End(hole_list[i].get_Starting_Address() - 1);
+                history_element.set_Id(old_number);
+                history_list.Add(history_element);
+                // putting old process in segment_list
+                Segment segment = new Segment();
+                segment.set_Name("Old Process" + (-1 * old_number));
+                segment.set_Process_ID(old_number);
+                segment.set_Size((hole_list[i].get_Starting_Address()) - start);
+                segment_list.Add(segment);
+                old_number--;
+            }
 
         }
 
