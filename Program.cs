@@ -137,18 +137,21 @@ namespace mem_allocation
             //Console.WriteLine("enter  method of allocation (first fit or best fit). ");
             //type_method = Console.ReadLine();
             int p_id = 0;
-            Boolean b = Worst_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
+            // Boolean b = Worst_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
 
-           // Boolean b = First_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
-            if (b == false)
+            while (true)
             {
-                Console.WriteLine("enter Process Id you want to remove");
+                Boolean b = First_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
+                if (b == false)
+                {
+                    Console.WriteLine("enter Process Id you want to remove");
 
-                int pn;
-                pn = Convert.ToInt32(Console.ReadLine());
-                deal(pn, ref segment_list, ref history_list, ref hole_list);
+                    int pn;
+                    pn = Convert.ToInt32(Console.ReadLine());
+                    deal(pn, ref segment_list, ref history_list, ref hole_list);
+
+                }
             }
-
 
         }
         //delete what user want remove from mem history and segment

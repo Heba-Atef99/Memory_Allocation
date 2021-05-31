@@ -22,7 +22,7 @@ namespace classes
         {
             return this.Name;
         }
-        public void set_Id(int Id)
+        public void set_Id(Nullable<int> Id)
         {
             this.Id = Id;
         }

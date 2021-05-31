@@ -163,6 +163,8 @@ namespace classes
                 new_hole.set_Starting_Address(history_list[history_index].get_Start());
                 new_hole.set_Size((history_list[history_index].get_End()) - (history_list[history_index].get_Start()) + 1);
                 hole_list.Add(new_hole);
+                // To set id of new hole in history list 
+                history_list[history_index].set_Id(null);
                 // To give this new hole id and update rest of ids and change name in history 
                 hole_list = hole_list.OrderBy(Hole => Hole.get_Starting_Address()).ToList();
                 for (int i = 0; i < hole_list.Count; i++)
