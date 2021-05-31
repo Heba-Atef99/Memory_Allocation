@@ -111,7 +111,7 @@ namespace mem_allocation
             //    segment_list.Add(segment);
             //    old_number--;
             //}
-
+            Create_H_L(ref history_list, ref hole_list, ref segment_list, mem_size);
             //Console.WriteLine("enter number of process ");
             num_process = Convert.ToInt32(Console.ReadLine());
             //enter all processes
