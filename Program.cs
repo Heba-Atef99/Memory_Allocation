@@ -141,7 +141,7 @@ namespace mem_allocation
 
             while (true)
             {
-                Boolean b = First_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
+                Boolean b = Worst_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
                 if (b == false)
                 {
                     Console.WriteLine("enter Process Id you want to remove");
@@ -157,13 +157,16 @@ namespace mem_allocation
         //delete what user want remove from mem history and segment
         public static void deal(int pn, ref List<Segment> segment_list, ref List<Mem_History> history_list, ref List<Hole> hole_list)
         {
+            int index= history_list.FindIndex(x => x.get_Id() == pn); ;
+            
             for (int i = 0; i < segment_list.Count(); i++)
             {
-                if (segment_list[i].get_Process_ID() == pn)
+                if (segment_list[i].get_Process_ID() == pn&&index!=-1)
                 {
-                    
+
                     segment_list[i].Deallocate(ref history_list, ref hole_list);
                     segment_list.Remove(segment_list[i]);
+                    i = i-1;
                 }
 
             }
@@ -183,7 +186,7 @@ namespace mem_allocation
                 flag = 0;
                 history_list = history_list.OrderBy(s => s.get_Start()).ToList();//here
                 index1 = history_list.FindIndex(x => x.get_Name() ==
-                ("p" + Convert.ToString(add) + ":" + s));
+                ("P" + Convert.ToString(add) + ":" + s));
                 index2 = history_list.FindIndex(x => x.get_Name() == s);
 
                 if (index1 == -1 && index2 == -1)
@@ -242,9 +245,9 @@ namespace mem_allocation
                 int add = segment_list[i].get_Process_ID();
                 string s = segment_list[i].get_Name();
                 flag = 0;
-                history_list = history_list.OrderBy(s => (s.get_End()- s.get_Start()+1)).ToList();//here
+                history_list = history_list.OrderBy(s => (s.get_End() - s.get_Start() + 1)).ToList();//here
                 index1 = history_list.FindIndex(x => x.get_Name() ==
-                ("p" + Convert.ToString(add) + ":" + s));
+                ("P" + Convert.ToString(add) + ":" + s));
                 index2 = history_list.FindIndex(x => x.get_Name() == s);
 
                 if (index1 == -1 && index2 == -1)
@@ -305,7 +308,7 @@ namespace mem_allocation
                 flag = 0;
                 history_list = history_list.OrderByDescending(s => (s.get_End() - s.get_Start() + 1)).ToList();//here
                 index1 = history_list.FindIndex(x => x.get_Name() ==
-                ("p" + Convert.ToString(add) + ":" + s));
+                ("P" + Convert.ToString(add) + ":" + s));
                 index2 = history_list.FindIndex(x => x.get_Name() == s);
 
                 if (index1 == -1 && index2 == -1)
@@ -435,6 +438,7 @@ namespace mem_allocation
 
         }
 
+        
 
     }
 }
