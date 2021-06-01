@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using classes;
+using Memory_Managment.AllocationMethods;
 
 namespace Memory_Managment
 {
@@ -17,6 +18,9 @@ namespace Memory_Managment
         public int no_of_processes = (Form1.num_process);
         public int initial = 1;
         public List<Segment> segment_list = new List<Segment>();
+        public List<Hole> hole_list = new List<Hole>();
+        public List<Mem_History> history_list = new List<Mem_History>();
+        public int p_id;
         public int key = Form1.key;
 
 
@@ -56,12 +60,16 @@ namespace Memory_Managment
                     {
                     case 1:
                         //call first fit function
+                        error = AlloctionMethods.First_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
                         break;
                     case 2:
                         //call best fil function
-                        break;
+                        error = AlloctionMethods.Best_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
+        
+                            break;
                     case 3:
                         //call wosrt fit function
+                        error = AlloctionMethods.Worst_Fit(ref segment_list, ref history_list, ref hole_list, ref p_id);
                         break;
                 }
                 if (error == false)
