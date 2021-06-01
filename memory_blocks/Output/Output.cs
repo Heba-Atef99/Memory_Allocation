@@ -10,19 +10,19 @@ using System.Windows.Forms;
 
 namespace memory_blocks
 {
-    public partial class Form1 : Form
+    public partial class Output : Form
     {
-        public Form1()
+        public Output()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Memory_Load(object sender, EventArgs e)
         {
+
         }
 
-
-        private void Form1_Paint(object sender, PaintEventArgs e)
+        private void Memory_Paint(object sender, PaintEventArgs e)
         {
             //dimensions of the rectangel
             int width = 200;
@@ -30,7 +30,7 @@ namespace memory_blocks
 
             //margins of the rectangle inside the form  
             int blocks_number = 5;
-            int x_margin = 300;
+            int x_margin = 360;
             int[] y_margin = new int[blocks_number];
 
             // Text specifications: pen, font
@@ -44,12 +44,12 @@ namespace memory_blocks
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
 
-            for(int i = 0; i < blocks_number; i++)
+            for (int i = 0; i < blocks_number; i++)
             {
                 text = "Segment " + i;
 
                 if (i == 0)
-                    y_margin[i] = 50;
+                    y_margin[i] = 80;
                 else
                     y_margin[i] = y_margin[i - 1] + height[i - 1];
 
@@ -60,10 +60,11 @@ namespace memory_blocks
                 // Create rectangle.
                 Rectangle rect = new Rectangle(x_margin, y_margin[i], width, height[i]);
                 e.Graphics.DrawString(text, text_font, Brushes.Black, rect, stringFormat);
-                
+
                 // Draw rectangle to screen.
                 e.Graphics.DrawRectangle(black_pen, rect);
             }
         }
+
     }
 }
