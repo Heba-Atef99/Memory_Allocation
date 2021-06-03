@@ -15,6 +15,7 @@ namespace memory_blocks
     public partial class Deallocate : Form
     {
         public static int p_id = Form3.p_id;
+        public static int mem = Form1.mem_size;
         public List<Mem_History> hl_output = new List<Mem_History>();
         public List<Segment> segment_list = new List<Segment>();
         public List<Hole> hole_list = new List<Hole>();
@@ -33,14 +34,26 @@ namespace memory_blocks
             string title = "Allocation Error";
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
             DialogResult result = MessageBox.Show(message, title, buttons);
+
             if (result == DialogResult.Yes)
             {
                 Dictionary<int, string> comboSource = new Dictionary<int, string>();
-                int size = hl_output.Count;
+                //List <Mem_History> hl_ot = hl_output.Distinct().ToList();
+                List<Mem_History> hl_ot = hl_output.GroupBy(x => x.get_Id()).Select(x => x.First()).ToList();
+                int size = hl_ot.Count;
+                Nullable<int> id = 0;
                 for(int i = 0; i < size; i++)
                 {
-                    if(hl_output[i].get_Id() != null)
-                        comboSource.Add((int)hl_output[i].get_Id(), hl_output[i].get_Name());
+                    id = hl_ot[i].get_Id();
+                    if (id != null)
+                    {
+                        if(id < 0)
+                            comboSource.Add((int)id, hl_ot[i].get_Name());
+                        
+                        else
+                            comboSource.Add((int)id, "P"+id);
+
+                    }
                 }
 
                 comboBox1.DataSource = new BindingSource(comboSource, null);
@@ -151,7 +164,7 @@ namespace memory_blocks
                 e.Graphics.DrawRectangle(black_pen, rect);
             }
 
-            e.Graphics.DrawString(hl_output[i - 1].get_End().ToString(), text_font, Brushes.White, x_margin - 35, y_margin[i - 1] - 8 + height);
+            e.Graphics.DrawString((mem - 1).ToString(), text_font, Brushes.White, x_margin - 35, y_margin[i - 1] - 8 + height);
         }
 
     }

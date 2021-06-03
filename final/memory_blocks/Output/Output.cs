@@ -12,6 +12,7 @@ namespace memory_blocks
 {
     public partial class Output : Form
     {
+        public static int mem = Form1.mem_size;
         public List<Mem_History> hl_output = new List<Mem_History>();
         public List<Segment> segment_list = new List<Segment>();
         public List<Hole> hole_list = new List<Hole>();
@@ -71,7 +72,7 @@ namespace memory_blocks
                 e.Graphics.DrawRectangle(black_pen, rect);
             }
 
-            e.Graphics.DrawString(hl_output[i - 1].get_End().ToString(), text_font, Brushes.White, x_margin - 35, y_margin[i - 1] - 8 + height);
+            e.Graphics.DrawString((mem - 1).ToString(), text_font, Brushes.White, x_margin - 35, y_margin[i - 1] - 8 + height);
         }
 
     }
