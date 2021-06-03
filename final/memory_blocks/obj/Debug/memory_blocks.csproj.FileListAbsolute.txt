@@ -1,0 +1,14 @@
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\bin\Debug\memory_blocks.exe.config
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\bin\Debug\memory_blocks.exe
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\bin\Debug\memory_blocks.pdb
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.csprojAssemblyReference.cache
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.Properties.Resources.resources
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.csproj.GenerateResource.cache
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.csproj.CoreCompileInputs.cache
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.exe
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.pdb
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.Output.resources
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.Deallocate.resources
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.Form2.resources
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.Form1.resources
+F:\FOE-ASU\3rd\2nd\OS\Memory project\memory_blocks\obj\Debug\memory_blocks.Form3.resources
