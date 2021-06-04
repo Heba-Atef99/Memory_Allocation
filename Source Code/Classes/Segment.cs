@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-
 namespace classes
 {
-    class Segment
+   public class Segment
     {
 
         private string Name;
@@ -42,37 +41,37 @@ namespace classes
             return this.Process_ID;
         }
 
-        public void allocate( Hole h,ref List<Mem_History> history_list,ref List<Hole> hole_list)
+        public void allocate(Hole h, ref List<Mem_History> history_list, ref List<Hole> hole_list)
         {
 
             //sort history_list 
             history_list = history_list.OrderBy(s => s.get_Start()).ToList();
 
             //sort holes_list
-            hole_list=hole_list.OrderBy(s=>s.get_Starting_Address()).ToList();
-            
-            int difference = h.get_Size()-this.get_Size();
+            hole_list = hole_list.OrderBy(s => s.get_Starting_Address()).ToList();
+
+            int difference = h.get_Size() - this.get_Size();
             if (difference < 0)
             {
-                Console.WriteLine("the segment is larger than the hole");
+                // Console.WriteLine("the segment is larger than the hole");
                 return;
             }
             //insert the segment in the hole choosen
             for (int i = 0; i < history_list.Count; i++)
             {
-                if(history_list[i].get_Start()==h.get_Starting_Address())
+                if (history_list[i].get_Start() == h.get_Starting_Address())
                 {
-                    history_list[i].set_Name ("P"+this.get_Process_ID() +":"+this.get_Name());
+                    history_list[i].set_Name("P" + this.get_Process_ID() + ":" + this.get_Name());
                     history_list[i].set_Id(this.get_Process_ID());
-                    history_list[i].set_End(history_list[i].get_Start()+this.get_Size()-1);
-                    
+                    history_list[i].set_End(history_list[i].get_Start() + this.get_Size() - 1);
+
                     break;
                 }
             }
             // adjust the remaining part of the hole
-            for (int i=0;i<hole_list.Count;i++)
+            for (int i = 0; i < hole_list.Count; i++)
             {
-                if (hole_list[i].get_Hole_ID()==h.get_Hole_ID())
+                if (hole_list[i].get_Hole_ID() == h.get_Hole_ID())
                 {
                     //if there is no remaining space in the hole then remove the entry of this hole from holes_list
                     if (difference == 0)
@@ -85,7 +84,7 @@ namespace classes
                             hole_list[j].set_Hole_ID(j);
                             int add = hole_list[j].get_Starting_Address();
                             history_list[history_list.FindIndex(a => a.get_Start() == add)].set_Name("Hole" + j);
-                            
+
                         }
 
                     }
@@ -96,22 +95,23 @@ namespace classes
                         hole_list[i].set_Size(hole_list[i].get_Size() - this.get_Size());
                         hole_list[i].set_Starting_Address(hole_list[i].get_Starting_Address() + this.get_Size());
                         // add an entry in history_list for the remaining space in the hole
-                        Mem_History m =new Mem_History();
+                        Mem_History m = new Mem_History();
                         m.set_Name("Hole" + h.get_Hole_ID());
                         m.set_Start(hole_list[i].get_Starting_Address());
-                        m.set_End(hole_list[i].get_Starting_Address() + hole_list[i].get_Size()-1);
+                        m.set_End(hole_list[i].get_Starting_Address() + hole_list[i].get_Size() - 1);
                         history_list.Add(m);
                         break;
                     }
-                    
+
                 }
             }
             history_list = history_list.OrderBy(s => s.get_Start()).ToList();
             hole_list = hole_list.OrderBy(s => s.get_Starting_Address()).ToList();
-            
-        public void Deallocate(ref List<Mem_History> history_list,ref List<Hole> hole_list)
+
+        }
+        public void Deallocate(ref List<Mem_History> history_list, ref List<Hole> hole_list)
         {
-            int find1 = 0;int find2 = 0;int find3 = 0;
+            int find1 = 0; int find2 = 0; int find3 = 0;
             // history must be sorted before anything
             history_list = history_list.OrderBy(Hole => Hole.get_Start()).ToList();
             // to get name and search in history list
@@ -163,6 +163,8 @@ namespace classes
                 new_hole.set_Starting_Address(history_list[history_index].get_Start());
                 new_hole.set_Size((history_list[history_index].get_End()) - (history_list[history_index].get_Start()) + 1);
                 hole_list.Add(new_hole);
+                // To set id of new hole in history list 
+                history_list[history_index].set_Id(null);
                 // To give this new hole id and update rest of ids and change name in history 
                 hole_list = hole_list.OrderBy(Hole => Hole.get_Starting_Address()).ToList();
                 for (int i = 0; i < hole_list.Count; i++)
@@ -174,7 +176,7 @@ namespace classes
                 // to sort history again
                 history_list = history_list.OrderBy(Hole => Hole.get_Start()).ToList();
             }
-            
+
 
         }
     }

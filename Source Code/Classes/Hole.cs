@@ -4,13 +4,17 @@ using System.Text;
 
 namespace classes
 {
-    class Hole
+   public class Hole
     {
         private int Hole_ID;
         private int Starting_Address;
         private int Size;
         public Hole()
         {
+            this.Hole_ID = 0;
+            this.Starting_Address = 0;
+            this.Size = 0;
+
         }
         public void set_Hole_ID(int Hole_ID)
         {
